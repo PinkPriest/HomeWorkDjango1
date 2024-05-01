@@ -7,11 +7,12 @@ def index(request):
 
 def show_catalog(request):
     template = 'catalog.html'
-    context = {}
+    phones_all = Phone.objects.all()
+    context = {'phones': phones_all}
     return render(request, template, context)
 
 
 def show_product(request, slug):
     template = 'product.html'
-    context = {}
+    context = Phone.objects.filter(slug__contains=slug).first()
     return render(request, template, context)
