@@ -9,7 +9,19 @@ def index(request):
 def show_catalog(request):
     template = 'catalog.html'
     phones_all = Phone.objects.all()
-    context = {'phones': phones_all}
+    # context = {'phones': phones_all}
+    sort = request.GET.get('sort')
+    queryset = super(phones_all).get_queryset().order_by('id')
+    if sort == ('price'):
+        context = queryset.order_by('price')
+    if sort == ('-price'):
+        context = queryset.order_by('-price')
+    if sort == ('name'):
+        context = queryset.order_by('name')
+    if sort == ('-name'):
+        context = queryset.order_by('-name')
+    else:
+        context = {'phones': phones_all}
     return render(request, template, context)
 
 
